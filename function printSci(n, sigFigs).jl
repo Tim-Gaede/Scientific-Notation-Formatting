@@ -29,7 +29,11 @@ function sci(n, sigFigs)
 
     mant = format(n / 10.0^pwr, precision=sigFigs-1)
 
-
+    if (n < 0.0  &&  length(mant) > sigFigs + 2)  ||
+       (n > 0.0  &&  length(mant) > sigFigs + 1)
+        pwr += 1
+        mant = format(n / 10.0^pwr, precision=sigFigs-1)
+    end
     mant * " × 10" * superscript(pwr)
 end
 #-------------------------------------------------------------------------------
