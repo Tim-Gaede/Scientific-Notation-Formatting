@@ -1,5 +1,7 @@
 using Formatting
 
+
+
 #-------------------------------------------------------------------------------
 function superscript(n::Int)
     if n == 0;    return "⁰";    end
@@ -24,7 +26,8 @@ end
 
 
 #-------------------------------------------------------------------------------
-function sci(n, sigFigs)
+# Converts a Number into a String in scientific notation
+function sci(n::Number, sigFigs::Int)
     pwr = convert(Int, floor(log10(abs(n))))
 
     mant = format(n / 10.0^pwr, precision=sigFigs-1)
@@ -34,9 +37,12 @@ function sci(n, sigFigs)
         pwr += 1
         mant = format(n / 10.0^pwr, precision=sigFigs-1)
     end
+    
     mant * " × 10" * superscript(pwr)
 end
 #-------------------------------------------------------------------------------
+
+
 
 #-------------------------------------------------------------------------------
 function sciVert(a, sigFigs)
