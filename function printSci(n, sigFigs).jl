@@ -45,6 +45,28 @@ end
 
 
 #-------------------------------------------------------------------------------
+# Converts a Number into a String in scientific notation
+function sci(n::Number, sigFigs::Int, blankForLeftPlus::Bool)
+    pwr = convert(Int, floor(log10(abs(n))))
+
+    mant = format(n / 10.0^pwr, precision=sigFigs-1)
+
+    if n < 0.0  &&  length(mant) > sigFigs + 2  ||
+       n > 0.0  &&  length(mant) > sigFigs + 1
+        pwr += 1
+        mant = format(n / 10.0^pwr, precision=sigFigs-1)
+    end
+
+    left = ""
+    if n ≥ 0.0  &&  blankForLeftPlus;    left = " ";    end
+
+    left * mant * " × 10" * superscript(pwr)
+end
+#-------------------------------------------------------------------------------
+
+
+
+#-------------------------------------------------------------------------------
 function sciVert(a, sigFigs)
     neg_fnd = false
     i = 1
